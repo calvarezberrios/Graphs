@@ -97,7 +97,26 @@ class Graph:
         starting_vertex to destination_vertex in
         breath-first order.
         """
-        pass  # TODO
+        queue = Queue()
+        visited = set()
+
+        # Push current path you're on onto the stack, instead of just a single vertex
+        queue.enqueue([starting_vertex])
+
+        while queue.size() > 0:
+            currPath = queue.dequeue()
+            currNode = currPath[-1] # the current node you're on is the last node in the path
+
+            if currNode == destination_vertex:
+                return currPath
+
+            if currNode not in visited:
+                visited.add(currNode)
+                # print(currNode)
+                for neighbor in self.vertices[currNode]:
+                    newPath = list(currPath) # make a copy of the current path
+                    newPath.append(neighbor)
+                    queue.enqueue(newPath)
 
     def dfs(self, starting_vertex, destination_vertex):
         """
@@ -105,9 +124,28 @@ class Graph:
         starting_vertex to destination_vertex in
         depth-first order.
         """
-        pass  # TODO
+        stack = Stack()
+        visited = set()
 
-    def dfs_recursive(self, starting_vertex, destination_vertex):
+        # Push current path you're on onto the stack, instead of just a single vertex
+        stack.push([starting_vertex])
+
+        while stack.size() > 0:
+            currPath = stack.pop()
+            currNode = currPath[-1] # the current node you're on is the last node in the path
+
+            if currNode == destination_vertex:
+                return currPath
+
+            if currNode not in visited:
+                visited.add(currNode)
+                # print(currNode)
+                for neighbor in self.vertices[currNode]:
+                    newPath = list(currPath) # make a copy of the current path
+                    newPath.append(neighbor)
+                    stack.push(newPath)
+
+    def dfs_recursive(self, starting_vertex, destination_vertex, visited = set()):
         """
         Return a list containing a path from
         starting_vertex to destination_vertex in
@@ -115,7 +153,9 @@ class Graph:
 
         This should be done using recursion.
         """
-        pass  # TODO
+
+        pass
+            
 
 if __name__ == '__main__':
     graph = Graph()  # Instantiate your graph
@@ -175,12 +215,12 @@ if __name__ == '__main__':
     Valid BFS path:
         [1, 2, 4, 6]
     '''
-    print(graph.bfs(1, 6))
+    print("bfs", graph.bfs(1, 6))
 
     '''
     Valid DFS paths:
         [1, 2, 4, 6]
         [1, 2, 4, 7, 6]
     '''
-    print(graph.dfs(1, 6))
-    print(graph.dfs_recursive(1, 6))
+    print("dfs", graph.dfs(1, 6))
+    print("recursive dfs", graph.dfs_recursive(1, 6))
