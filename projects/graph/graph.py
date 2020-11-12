@@ -231,12 +231,12 @@ if __name__ == '__main__':
     Valid BFS path:
         [1, 2, 4, 6]
     '''
-    print("bfs", graph.bfs(1, 6))
+    print(graph.bfs(1, 6))
 
     '''
     Valid DFS paths:
         [1, 2, 4, 6]
         [1, 2, 4, 7, 6]
     '''
-    print("dfs", graph.dfs(1, 6))
-    print("recursive dfs", graph.dfs_recursive(1, 6))
+    print(graph.dfs(1, 6))
+    print(graph.dfs_recursive(1, 6))
