@@ -4,30 +4,38 @@ def earliest_ancestor(ancestors, starting_node):
     
     graph = createGraph(ancestors)
 
-    stack = deque()
-    visited = set()
+    queue = deque()
+    earliest_parent = -1
 
-    stack = ancestors[0][0]
+    queue.appendleft(starting_node)
 
-    while len(stack) > 0:
-        curr = stack.pop()
-        visited.add(curr)
+    while len(queue) > 0:
+        curr = queue.pop()
+        
+        if curr not in graph:
+            continue
+
+        earliest_parent = min(graph[curr])
+        
+        for p in graph[curr]:
+            queue.appendleft(p)
 
         
-
+        
+    return earliest_parent
+            
+            
 
 
 def createGraph(ancestors):
     graph = {}
 
-    
-
     for edge in ancestors:
         parent, child = edge[0], edge[1]
-        if parent in graph:
-            graph[parent].add(child)
+        if child in graph:
+            graph[child].add(parent)
         else:
-            graph[parent] = { child }
+            graph[child] = { parent }
 
     return graph
         
