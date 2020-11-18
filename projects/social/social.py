@@ -74,24 +74,34 @@ class SocialGraph:
         """
         visited = {}  # Note that this is a dictionary, not a set
         # !!!! IMPLEMENT ME
-        queue = deque()
-        queue.appendleft([user_id])
+                    
+        visited[user_id] = self.bfs(user_id, user_id)
+        
+        for user in self.users:
+            path = self.bfs(user, user_id)
+            if path != None:
+                visited[user] = path
+        return visited
 
+    def bfs(self, start, end):
+        queue = deque()
+        visited = set()
+
+        queue.appendleft([start])
+        
         while len(queue) > 0:
             currPath = queue.pop()
             currNode = currPath[-1]
-            
-            if currNode == user_id:
-                visited[currNode] = currPath
-            
-            
 
+            if currNode == end:
+                return currPath
             
-
-                
-
-
-        return visited
+            if currNode not in visited:
+                visited.add(currNode)
+                for friend in self.friendships[currNode]:
+                    newPath = list(currPath)
+                    newPath.append(friend)
+                    queue.appendleft(newPath)
 
 
 if __name__ == '__main__':
